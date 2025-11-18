@@ -6,7 +6,7 @@ Cette API REST permet la gestion complète d'une boutique en ligne de matériel 
 
 ## Base URL
 ```
-http://localhost:5000/api
+http://localhost:5001/api
 ```
 
 ## Authentification
@@ -282,7 +282,7 @@ Récupérer une catégorie spécifique.
 ### 1. Inscription et connexion
 ```bash
 # Inscription
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST http://localhost:5001/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "client@example.com",
@@ -292,7 +292,7 @@ curl -X POST http://localhost:5000/api/auth/register \
   }'
 
 # Connexion
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST http://localhost:5001/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "client@example.com",
@@ -303,18 +303,18 @@ curl -X POST http://localhost:5000/api/auth/login \
 ### 2. Consulter les produits
 ```bash
 # Tous les produits
-curl http://localhost:5000/api/produits
+curl http://localhost:5001/api/produits
 
 # Recherche
-curl "http://localhost:5000/api/produits/search?q=MacBook"
+curl "http://localhost:5001/api/produits/search?q=MacBook"
 
 # Par catégorie
-curl "http://localhost:5000/api/produits?category_id=1"
+curl "http://localhost:5001/api/produits?category_id=1"
 ```
 
 ### 3. Passer une commande
 ```bash
-curl -X POST http://localhost:5000/api/commandes \
+curl -X POST http://localhost:5001/api/commandes \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{

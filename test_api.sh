@@ -6,7 +6,7 @@
 echo "🚀 Test complet de l'API DigiMarket E-commerce"
 echo "=============================================="
 
-API_URL="http://localhost:5000"
+API_URL="http://localhost:5001"
 
 # Couleurs pour l'affichage
 RED='\033[0;31m'

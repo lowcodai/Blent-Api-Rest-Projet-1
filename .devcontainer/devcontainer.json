@@ -1,0 +1,55 @@
+{
+  "name": "DigiMarket API Development",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  
+  "forwardPorts": [5001, 5000],
+  
+  "portsAttributes": {
+    "5001": {
+      "label": "DigiMarket API Server",
+      "onAutoForward": "openBrowser",
+      "visibility": "public",
+      "protocol": "https"
+    },
+    "5000": {
+      "label": "DigiMarket API (Alternative)",
+      "onAutoForward": "ignore",
+      "visibility": "private"
+    }
+  },
+  
+  "postCreateCommand": {
+    "setup-env": "python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt",
+    "init-db": "source .venv/bin/activate && python -c 'from app import create_app, db; from app.utils.seed_data import create_sample_data; app = create_app(); app.app_context().push(); db.create_all(); create_sample_data()'"
+  },
+  
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "./.venv/bin/python",
+        "python.terminal.activateEnvironment": true,
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/*.pyc": true,
+          ".pytest_cache": true,
+          "*.db": false
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.black-formatter",
+        "ms-vscode.test-adapter-converter",
+        "ms-toolsai.jupyter",
+        "humao.rest-client"
+      ]
+    }
+  },
+  
+  "remoteUser": "vscode"
+}

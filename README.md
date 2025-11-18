@@ -69,7 +69,7 @@ flask --app run.py seed-db
 python run.py
 ```
 
-L'API sera disponible sur `http://localhost:5000`
+L'API sera disponible sur `http://localhost:5001`
 
 ## 📚 Structure du projet
 
@@ -122,15 +122,15 @@ Mot de passe: client123
 ### Test rapide de l'API
 ```bash
 # Vérifier que l'API fonctionne
-curl http://localhost:5000/api/health
+curl http://localhost:5001/api/health
 
 # Connexion admin
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST http://localhost:5001/api/auth/login \
   -H "Content-Type: application/json" \
-    -d '{"email":"admin@digimarket.com","password":"admin123"}'
+  -d '{"email":"admin@digimarket.com","password":"admin123"}'
 
-    # Lister les produits
-    curl http://localhost:5000/api/produits
+# Lister les produits
+curl http://localhost:5001/api/produits
     ```
 
     ## 🔧 Technologies utilisées
@@ -287,14 +287,14 @@ curl -X POST http://localhost:5000/api/auth/login \
     ### Scénario complet : Du catalogue à la commande
 
     ```bash
-    # 1. Consulter les produits disponibles
-    curl http://localhost:5000/api/produits
+# 1. Consulter les produits disponibles
+curl http://localhost:5001/api/produits
 
-    # 2. S'inscrire comme nouveau client  
-    curl -X POST http://localhost:5000/api/auth/register \
-      -H "Content-Type: application/json" \
-        -d '{
-            "email": "nouveau@client.com",
+# 2. S'inscrire comme nouveau client  
+curl -X POST http://localhost:5001/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "nouveau@client.com",
                 "password": "monmotdepasse",
                     "first_name": "Alice",
                         "last_name": "Durand",
@@ -302,26 +302,26 @@ curl -X POST http://localhost:5000/api/auth/login \
                               }'
 
                               # 3. Se connecter (récupérer le token)
-                              TOKEN=$(curl -s -X POST http://localhost:5000/api/auth/login \
-                                -H "Content-Type: application/json" \
-                                  -d '{"email":"nouveau@client.com","password":"monmotdepasse"}' \
-                                    | jq -r '.access_token')
+TOKEN=$(curl -s -X POST http://localhost:5001/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"nouveau@client.com","password":"monmotdepasse"}' \
+  | jq -r '.access_token')
 
-                                    # 4. Passer une commande
-                                    curl -X POST http://localhost:5000/api/commandes \
-                                      -H "Content-Type: application/json" \
-                                        -H "Authorization: Bearer $TOKEN" \
-                                          -d '{
-                                              "shipping_address": "123 Rue de la Technologie, Paris",
-                                                  "order_lines": [
-                                                        {"product_id": 1, "quantity": 1},
-                                                              {"product_id": 9, "quantity": 1}
-                                                                  ]
-                                                                    }'
+# 4. Passer une commande
+curl -X POST http://localhost:5001/api/commandes \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{
+    "shipping_address": "123 Rue de la Technologie, Paris",
+    "order_lines": [
+      {"product_id": 1, "quantity": 1},
+      {"product_id": 9, "quantity": 1}
+    ]
+  }'
 
-                                                                    # 5. Consulter ses commandes
-                                                                    curl http://localhost:5000/api/commandes \
-                                                                      -H "Authorization: Bearer $TOKEN"
+# 5. Consulter ses commandes
+curl http://localhost:5001/api/commandes \
+  -H "Authorization: Bearer $TOKEN"
                                                                       ```
 
                                                                       ## 📈 Évolutions possibles

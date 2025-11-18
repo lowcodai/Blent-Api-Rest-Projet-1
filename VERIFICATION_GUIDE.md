@@ -2,6 +2,33 @@
 
 Ce guide vous explique comment vérifier que l'API DigiMarket fonctionne correctement.
 
+## 🌐 Configuration Codespace (GitHub Codespaces)
+
+**Si vous utilisez GitHub Codespaces :**
+
+1. **IMPORTANT : Activer l'environnement virtuel d'abord :**
+   ```bash
+   source .venv/bin/activate
+   ```
+   
+2. **Lancer le serveur :**
+   ```bash
+   python run.py
+   ```
+
+2. **VS Code détectera automatiquement le port 5001** et affichera une notification
+3. **Cliquer sur "Make Public"** ou configurer la visibilité dans l'onglet PORTS
+4. **Votre API sera accessible via une URL comme :**
+   ```
+   https://CODESPACE-NAME-5001.app.github.dev
+   ```
+
+5. **Pour les tests, remplacer localhost par votre URL Codespace :**
+   ```bash
+   export API_URL="https://VOTRE-CODESPACE-5001.app.github.dev"
+   # Puis utiliser $API_URL dans vos commandes curl
+   ```
+
 ## 🚀 Étapes de vérification
 
 ### 1. Préparation de l'environnement
@@ -41,8 +68,8 @@ python run.py
  * Serving Flask app 'app'
  * Debug mode: on
  * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.0.5:5000
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.5:5001
 ```
 
 ## 🔧 Tests de vérification
@@ -59,8 +86,11 @@ cd /workspaces/Blent-Api-Rest-Projet-1
 
 #### A. Test de base
 ```bash
-# Vérifier que l'API répond
-curl http://localhost:5000/api/health
+# Vérifier que l'API répond (local)
+curl http://localhost:5001/api/health
+
+# Ou si vous êtes sur Codespace:
+curl https://VOTRE-CODESPACE-5001.app.github.dev/api/health
 
 # Réponse attendue:
 {"status": "OK", "message": "API is running"}
@@ -69,24 +99,24 @@ curl http://localhost:5000/api/health
 #### B. Test de catalogue (public)
 ```bash
 # Lister les produits
-curl http://localhost:5000/api/produits
+curl http://localhost:5001/api/produits
 
 # Rechercher des produits
-curl "http://localhost:5000/api/produits/search?q=MacBook"
+curl "http://localhost:5001/api/produits/search?q=MacBook"
 
 # Lister les catégories
-curl http://localhost:5000/api/categories
+curl http://localhost:5001/api/categories
 ```
 
 #### C. Test d'authentification
 ```bash
 # Connexion admin
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST http://localhost:5001/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@digimarket.com","password":"admin123"}'
 
 # Inscription nouveau client
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST http://localhost:5001/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "nouveau@client.com",
@@ -99,21 +129,21 @@ curl -X POST http://localhost:5000/api/auth/register \
 #### D. Test avec authentification
 ```bash
 # 1. Se connecter et récupérer le token
-TOKEN=$(curl -s -X POST http://localhost:5000/api/auth/login \
+TOKEN=$(curl -s -X POST http://localhost:5001/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"jean.dupont@email.com","password":"client123"}' \
   | grep -o '"access_token":"[^"]*"' | cut -d'"' -f4)
 
 # 2. Consulter son profil
 curl -H "Authorization: Bearer $TOKEN" \
-  http://localhost:5000/api/auth/profile
+  http://localhost:5001/api/auth/profile
 
 # 3. Voir ses commandes
 curl -H "Authorization: Bearer $TOKEN" \
-  http://localhost:5000/api/commandes
+  http://localhost:5001/api/commandes
 
 # 4. Créer une nouvelle commande
-curl -X POST http://localhost:5000/api/commandes \
+curl -X POST http://localhost:5001/api/commandes \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -141,7 +171,7 @@ pytest tests/test_products.py -v
 ## ✅ Critères de validation
 
 ### Fonctionnalités de base ✅
-- [ ] API répond sur port 5000
+- [ ] API répond sur port 5001
 - [ ] Endpoint de santé accessible
 - [ ] Base de données initialisée avec données de test
 
@@ -198,7 +228,7 @@ rm -f digimarket.db
 ### Problème : Tests échouent
 ```bash
 # Vérifier que le serveur est lancé
-curl http://localhost:5000/api/health
+curl http://localhost:5001/api/health
 
 # Relancer les tests
 pytest tests/ -v
@@ -234,11 +264,11 @@ Clients:
 
 ```bash
 # Test de charge simple (nécessite Apache Bench)
-ab -n 100 -c 10 http://localhost:5000/api/produits
+ab -n 100 -c 10 http://localhost:5001/api/produits
 
 # Test de stress sur authentification
 for i in {1..10}; do
-  curl -X POST http://localhost:5000/api/auth/login \
+  curl -X POST http://localhost:5001/api/auth/login \
     -H "Content-Type: application/json" \
     -d '{"email":"admin@digimarket.com","password":"admin123"}' &
 done

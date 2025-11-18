@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 # Configuration
-API_BASE_URL = "http://localhost:5000"
+API_BASE_URL = "http://localhost:5001"
 API_URL = f"{API_BASE_URL}/api"
 
 class Colors:
