@@ -90,10 +90,21 @@ def main():
     print(f"\n{Colors.YELLOW}1. Tests de base{Colors.ENDC}")
     print("-" * 20)
     
-    # Test de l'endpoint racine
-    success, _ = test_endpoint("GET", "", description="Endpoint racine")
-    if not success:
+    # Test de l'endpoint racine (utilise API_BASE_URL directement)
+    try:
+        response = requests.get(API_BASE_URL, timeout=10)
+        if response.status_code == 200:
+            print_success("Endpoint racine - Status: 200")
+        else:
+            print_error(f"Endpoint racine - Status: {response.status_code} (attendu: 200)")
+            print_error("L'API ne répond pas. Vérifiez que le serveur est lancé.")
+            sys.exit(1)
+    except requests.exceptions.ConnectionError:
+        print_error("Endpoint racine - Impossible de se connecter à l'API")
         print_error("L'API ne répond pas. Vérifiez que le serveur est lancé.")
+        sys.exit(1)
+    except Exception as e:
+        print_error(f"Endpoint racine - Erreur: {str(e)}")
         sys.exit(1)
     
     # Test de l'endpoint de santé

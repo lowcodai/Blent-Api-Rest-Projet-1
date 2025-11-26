@@ -87,7 +87,7 @@ def login(data):
 def get_profile():
     """Récupérer le profil de l'utilisateur connecté"""
     current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
+    user = db.session.get(User, current_user_id)
     
     if not user:
         return jsonify({

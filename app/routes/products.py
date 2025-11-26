@@ -55,7 +55,7 @@ def get_products(current_user=None):
 @optional_auth
 def get_product(product_id, current_user=None):
     """Récupérer un produit spécifique"""
-    product = Product.query.get(product_id)
+    product = db.session.get(Product, product_id)
     
     if not product:
         return jsonify({
@@ -80,7 +80,7 @@ def create_product(current_user, data):
     """Créer un nouveau produit (Admin uniquement)"""
     try:
         # Vérifier que la catégorie existe
-        category = Category.query.get(data['category_id'])
+        category = db.session.get(Category, data['category_id'])
         if not category:
             raise ValidationError("Catégorie introuvable", "category_id")
         
@@ -123,7 +123,7 @@ def create_product(current_user, data):
 @validate_request_data(['name', 'price', 'category_id'])
 def update_product(product_id, current_user, data):
     """Mettre à jour un produit (Admin uniquement)"""
-    product = Product.query.get(product_id)
+    product = db.session.get(Product, product_id)
     
     if not product:
         return jsonify({
@@ -132,7 +132,7 @@ def update_product(product_id, current_user, data):
     
     try:
         # Vérifier que la catégorie existe
-        category = Category.query.get(data['category_id'])
+        category = db.session.get(Category, data['category_id'])
         if not category:
             raise ValidationError("Catégorie introuvable", "category_id")
         
@@ -176,7 +176,7 @@ def update_product(product_id, current_user, data):
 @admin_required
 def delete_product(product_id, current_user):
     """Supprimer un produit (Admin uniquement)"""
-    product = Product.query.get(product_id)
+    product = db.session.get(Product, product_id)
     
     if not product:
         return jsonify({

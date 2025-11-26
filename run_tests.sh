@@ -25,4 +25,4 @@ echo "🚀 Exécution des tests..."
 echo ""
 
 # Lancer pytest avec les arguments passés au script
-pytest tests/ "$@"
+pytest tests/ --disable-warnings "$@"

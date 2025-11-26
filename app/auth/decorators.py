@@ -13,8 +13,9 @@ def admin_required(f):
     @wraps(f)
     @jwt_required()
     def decorated(*args, **kwargs):
+        from app import db
         current_user_id = get_jwt_identity()
-        user = User.query.get(current_user_id)
+        user = db.session.get(User, current_user_id)
         
         if not user or not user.is_admin():
             return jsonify({
@@ -31,8 +32,9 @@ def customer_or_admin_required(f):
     @wraps(f)
     @jwt_required()
     def decorated(*args, **kwargs):
+        from app import db
         current_user_id = get_jwt_identity()
-        user = User.query.get(current_user_id)
+        user = db.session.get(User, current_user_id)
         
         if not user or not user.is_active:
             return jsonify({
@@ -52,9 +54,10 @@ def optional_auth(f):
             # Tenter de récupérer le token
             if 'Authorization' in request.headers:
                 from flask_jwt_extended import verify_jwt_in_request
+                from app import db
                 verify_jwt_in_request()
                 current_user_id = get_jwt_identity()
-                user = User.query.get(current_user_id)
+                user = db.session.get(User, current_user_id)
                 return f(current_user=user, *args, **kwargs)
         except Exception:
             # Si pas de token ou token invalide, continuer sans user
