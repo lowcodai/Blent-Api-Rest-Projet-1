@@ -23,10 +23,7 @@
     }
   },
   
-  "postCreateCommand": {
-    "setup-env": "python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt",
-    "init-db": "source .venv/bin/activate && python -c 'from app import create_app, db; from app.utils.seed_data import create_sample_data; app = create_app(); app.app_context().push(); db.create_all(); create_sample_data()'"
-  },
+  "postCreateCommand": "bash -c 'python -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/python -c \"from app import create_app, db; from app.utils.seed_data import create_sample_data; app = create_app(); app.app_context().push(); db.create_all(); create_sample_data()\"'",
   
   "customizations": {
     "vscode": {

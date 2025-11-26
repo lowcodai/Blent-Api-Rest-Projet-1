@@ -58,4 +58,5 @@ echo ""
 echo "🛑 Pour arrêter le serveur, utilisez Ctrl+C"
 echo ""
 
-python run.py
+# Lancer Flask sans le reloader pour éviter les problèmes de redémarrage
+python -c "from app import create_app; app = create_app(); app.run(debug=True, host='0.0.0.0', port=5001, use_reloader=False)"
