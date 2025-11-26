@@ -7,7 +7,7 @@
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   
-  "forwardPorts": [5001, 5000],
+  "forwardPorts": [5001],
   
   "portsAttributes": {
     "5001": {
@@ -15,11 +15,6 @@
       "onAutoForward": "openBrowser",
       "visibility": "public",
       "protocol": "https"
-    },
-    "5000": {
-      "label": "DigiMarket API (Alternative)",
-      "onAutoForward": "ignore",
-      "visibility": "private"
     }
   },
   
