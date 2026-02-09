@@ -6,7 +6,7 @@ A lightweight Streamlit GUI for testing the DigiMarket API with role-based acces
 import streamlit as st
 import requests
 import json
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Tuple
 import os
 
 # Configuration
@@ -27,7 +27,7 @@ def make_request(
     data: Optional[Dict] = None,
     params: Optional[Dict] = None,
     require_auth: bool = False
-) -> tuple[int, Any]:
+) -> Tuple[int, Any]:
     """Make HTTP request to the API"""
     url = f"{API_BASE_URL}{endpoint}"
     headers = {"Content-Type": "application/json"}
@@ -51,7 +51,7 @@ def make_request(
         
         try:
             return response.status_code, response.json()
-        except:
+        except requests.exceptions.JSONDecodeError:
             return response.status_code, {"message": response.text}
     except requests.exceptions.ConnectionError:
         return 503, {"error": "Cannot connect to API. Make sure the API server is running."}
