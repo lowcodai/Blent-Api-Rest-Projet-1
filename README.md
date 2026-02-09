@@ -71,6 +71,16 @@ python run.py
 
 L'API sera disponible sur `http://localhost:5001`
 
+### HTTPS en local (optionnel)
+Pour servir l'API en HTTPS avec un certificat auto-signe:
+```bash
+HTTPS=1 ./start_server.sh
+# ou
+HTTPS=1 ./start_api.sh
+```
+Cela genere `cert.pem` et `key.pem` a la racine si besoin.
+Dans Codespaces, mettez le port 5001 en protocole HTTPS dans l'onglet Ports.
+
 ## 📚 Structure du projet
 
 ```

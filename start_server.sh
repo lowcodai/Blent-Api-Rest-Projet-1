@@ -47,6 +47,19 @@ if [ ! -z "$PROCESSES" ]; then
     sleep 1
 fi
 
+# Activer HTTPS si demandé
+SSL_ARGS=""
+if [ "$HTTPS" = "1" ]; then
+    echo "🔐 Mode HTTPS active"
+    if [ ! -f "cert.pem" ] || [ ! -f "key.pem" ]; then
+        echo "🧾 Generation d'un certificat auto-signe (cert.pem/key.pem)..."
+        openssl req -x509 -newkey rsa:2048 -nodes \
+            -keyout key.pem -out cert.pem -days 365 \
+            -subj "/CN=localhost"
+    fi
+    SSL_ARGS=", ssl_context=('cert.pem','key.pem')"
+fi
+
 # Lancer le serveur
 echo ""
 echo "🌐 Démarrage du serveur sur le port 5001..."
@@ -59,4 +72,4 @@ echo "🛑 Pour arrêter le serveur, utilisez Ctrl+C"
 echo ""
 
 # Lancer Flask sans le reloader pour éviter les problèmes de redémarrage
-python -c "from app import create_app; app = create_app(); app.run(debug=True, host='0.0.0.0', port=5001, use_reloader=False)"
+python -c "from app import create_app; app = create_app(); app.run(debug=True, host='0.0.0.0', port=5001, use_reloader=False$SSL_ARGS)"

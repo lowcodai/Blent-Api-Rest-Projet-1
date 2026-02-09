@@ -1,5 +1,67 @@
 nohup: ignoring input
  * Serving Flask app 'app'
  * Debug mode: on
-Address already in use
-Port 5000 is in use by another program. Either identify and stop that program, or start the server with a different port.
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.2.85:5001
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 492-805-263
+127.0.0.1 - - [30/Jan/2026 10:49:48] code 400, message Bad request version ('\x00\x04\x03\x00\x01\x02\x00')
+127.0.0.1 - - [30/Jan/2026 10:49:48] "[31m[1m\x16\x03\x01\x01'\x01\x00\x01#\x03\x03okð\x9c#\x89ü\x1cC\x8d\x10[ÄW\x0eÈ\x12\x05úp6\x8e\x98\x85@B\x86\x1cÖ\x09£\x08 \x91<\x00\x00\x83\x05Oé¿ºJÕÃ:tE!\x87ý+\x92×Ñtxù|\x10\x8b½\x02\x1f\x00\x16\x13\x02\x13\x01À,À+À0À/À$À#À(À'\x00ÿ\x01\x00\x00Ä\x00\x00\x00\x0e\x00\x0c\x00\x00\x09localhost\x00\x0b\x00\x04\x03\x00\x01\x02\x00[0m" 400 -
+127.0.0.1 - - [30/Jan/2026 10:50:32] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:52:00] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:53:23] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:53:27] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "POST /api/auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "GET /api/categories HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "GET /api/produits HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "GET /api/produits/search?q=MacBook HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "[31m[1mPOST /api/produits HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "[33mGET /api/produits/9999 HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jan/2026 10:57:19] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "GET /api/categories HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "GET /api/produits HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "GET /api/produits/search?q=test HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "[31m[1mGET /api/auth/profile HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "[31m[1mGET /api/commandes HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "POST /api/auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+127.0.0.1 - - [30/Jan/2026 10:57:56] "[33mGET /api/produits/9999 HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jan/2026 10:57:57] "[33mGET /api/categories/9999 HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jan/2026 11:02:06] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:02:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jan/2026 11:21:14] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "GET /api/categories HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "GET /api/produits HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "GET /api/produits/search?q=test HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "[31m[1mGET /api/auth/profile HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "[31m[1mGET /api/commandes HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 11:39:59] "POST /api/auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:00] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+127.0.0.1 - - [30/Jan/2026 11:40:00] "[33mGET /api/produits/9999 HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jan/2026 11:40:00] "[33mGET /api/categories/9999 HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "GET /api/categories HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "GET /api/produits HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "GET /api/produits/search?q=test HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "[31m[1mGET /api/auth/profile HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "[31m[1mGET /api/commandes HTTP/1.1[0m" 401 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "POST /api/auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "[33mGET /api/produits/9999 HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jan/2026 11:40:24] "[33mGET /api/categories/9999 HTTP/1.1[0m" 404 -
