@@ -135,7 +135,7 @@ def display_response(response):
         try:
             json_data = response.json()
             st.json(json_data)
-        except:
+        except (ValueError, requests.exceptions.JSONDecodeError):
             st.text(response.text)
 
 
@@ -536,8 +536,8 @@ def orders_section():
     else:
         with tabs[4]:
             st.subheader("Cancel My Order")
-            cancel_order_id = st.number_input("Order ID to Cancel", min_value=1, value=1, key="cancel_order_id")
-            if st.button("⚠️ Cancel Order", key="cancel_order"):
+            cancel_order_id = st.number_input("Order ID to Cancel", min_value=1, value=1, key="cancel_order_id_client")
+            if st.button("⚠️ Cancel Order", key="cancel_order_client"):
                 response, error = make_request('POST', f'/commandes/{cancel_order_id}/cancel')
                 if error:
                     st.error(error)
