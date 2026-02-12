@@ -6,10 +6,26 @@ This application allows users to test API functions as either a user or an admin
 import streamlit as st
 import requests
 import json
+import os
 from datetime import datetime
 
 # Configuration
-API_BASE_URL = "http://localhost:5001/api"
+
+
+def get_api_base_url():
+    """Resolve API base URL from environment (Codespaces-aware)."""
+    # Allow explicit override via environment variable
+    configured_url = os.getenv("API_BASE_URL")
+    if configured_url:
+        return configured_url.rstrip('/')
+
+    # In Codespaces, use localhost since Streamlit and API run in same container
+    # (Public Codespace URLs require authentication that Streamlit can't provide)
+    # Users can set API_BASE_URL env var if they need the public URL
+    return "http://localhost:5001/api"
+
+
+API_BASE_URL = get_api_base_url()
 
 # Default test accounts
 DEFAULT_USERS = {
@@ -54,7 +70,7 @@ def make_request(method, endpoint, data=None, requires_auth=True):
         
         return response, None
     except requests.exceptions.ConnectionError:
-        return None, "Connection Error: Make sure the API server is running on http://localhost:5001"
+        return None, f"Connection Error: Make sure the API server is running on {API_BASE_URL}"
     except Exception as e:
         return None, f"Error: {str(e)}"
 
@@ -62,6 +78,9 @@ def make_request(method, endpoint, data=None, requires_auth=True):
 def login_page():
     """Display login page"""
     st.title("🔐 DigiMarket API Tester - Login")
+    
+    # Show API target URL for debugging
+    st.caption(f"🔗 API Target: `{API_BASE_URL}`")
     st.markdown("---")
     
     # Quick login buttons
@@ -103,15 +122,30 @@ def login_user(email, password):
         st.error(error)
         return
     
-    if response.status_code == 200:
-        data = response.json()
-        st.session_state.token = data.get('access_token')
-        st.session_state.user_info = data.get('user')
-        st.session_state.logged_in = True
-        st.success(f"✅ Logged in as {data['user']['first_name']} {data['user']['last_name']} ({data['user']['role']})")
-        st.rerun()
-    else:
-        st.error(f"Login failed: {response.json().get('message', 'Unknown error')}")
+    # Debug: show response details
+    with st.expander("🔍 Debug Info"):
+        st.write(f"Status Code: {response.status_code}")
+        st.write(f"Headers: {dict(response.headers)}")
+        st.write(f"Raw Content: {response.text[:500]}")
+    
+    try:
+        if response.status_code == 200:
+            data = response.json()
+            st.session_state.token = data.get('access_token')
+            st.session_state.user_info = data.get('user')
+            st.session_state.logged_in = True
+            st.success(f"✅ Logged in as {data['user']['first_name']} {data['user']['last_name']} ({data['user']['role']})")
+            st.rerun()
+        else:
+            try:
+                error_msg = response.json().get('message', 'Unknown error')
+            except (ValueError, requests.exceptions.JSONDecodeError):
+                error_msg = f"Non-JSON response: {response.text[:200]}"
+            st.error(f"Login failed (Status {response.status_code}): {error_msg}")
+    except (ValueError, requests.exceptions.JSONDecodeError) as e:
+        st.error(f"❌ Invalid JSON response from API")
+        st.error(f"Response content: {response.text[:500]}")
+        st.error(f"Error: {str(e)}")
 
 
 def logout():
