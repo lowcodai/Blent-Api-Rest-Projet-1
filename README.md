@@ -71,6 +71,16 @@ python run.py
 
 L'API sera disponible sur `http://localhost:5001`
 
+### 7. Lancer l'interface Web GUI (optionnel)
+Pour tester l'API via une interface graphique Streamlit:
+```bash
+streamlit run streamlit_app.py
+```
+
+L'interface sera disponible sur `http://localhost:8501`
+
+> 📘 **Documentation complète du GUI** disponible dans [STREAMLIT_GUI.md](STREAMLIT_GUI.md)
+
 ### HTTPS en local (optionnel)
 Pour servir l'API en HTTPS avec un certificat auto-signe:
 ```bash
